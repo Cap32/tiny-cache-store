@@ -1,0 +1,26 @@
+{
+	"plugins": [
+		["transform-es2015-modules-commonjs", { "loose": true }],
+	],
+	"env": {
+		"umd": {
+			"plugins": [
+				["transform-es2015-modules-commonjs", { "loose": true }],
+				"transform-es2015-modules-umd",
+			],
+		},
+		"umdmin": {
+			"presets": ["minify"],
+			"plugins": [
+				["transform-es2015-modules-commonjs", { "loose": true }],
+				"transform-es2015-modules-umd",
+			],
+		},
+		"cmdmin": {
+			"presets": ["minify"],
+			"plugins": [
+				["transform-es2015-modules-commonjs", { "loose": true }],
+			],
+		},
+	},
+}
