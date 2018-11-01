@@ -87,4 +87,12 @@ describe('cache', () => {
 		cache.set('baz', 1);
 		expect(cache.has('foo')).toBe(false);
 	});
+
+	test('clear', () => {
+		const cache = new Cache();
+		cache.set('foo', 1);
+		cache.set('bar', 1);
+		cache.clear();
+		expect(cache.size()).toBe(0);
+	});
 });

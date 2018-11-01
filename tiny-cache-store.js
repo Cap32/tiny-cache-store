@@ -88,6 +88,12 @@ Indexes.fn.delete = function (key) {
 	drop(this._expires, data.expiresAt);
 };
 
+Indexes.fn.clear = function () {
+	this._map = {};
+	this._uses = [];
+	this._expires = [];
+};
+
 Indexes.fn.size = function () {
 	var length = this._uses.length;
 	if (this._expires.length) {
@@ -112,6 +118,7 @@ function Cache(options) {
 	this._get = defaults(options, 'onGet', this._onGet.bind(this));
 	this._set = defaults(options, 'onSet', this._onSet.bind(this));
 	this._del = defaults(options, 'onDel', this._onDel.bind(this));
+	this._clear = defaults(options, 'onClear', this._onClear.bind(this));
 }
 
 Cache.fn = Cache.prototype;
@@ -126,6 +133,10 @@ Cache.fn._onSet = function (key, item) {
 
 Cache.fn._onDel = function (key) {
 	return !(this._store[key] = undefined);
+};
+
+Cache.fn._onClear = function (key) {
+	this._store = {};
 };
 
 Cache.fn._getIndexes = function () {
@@ -157,6 +168,12 @@ Cache.fn.delete = function (key) {
 	var indexes = this._getIndexes();
 	indexes.delete(key);
 	return this._del(key);
+};
+
+Cache.fn.clear = function () {
+	var indexes = this._getIndexes();
+	indexes.clear();
+	return this._clear();
 };
 
 Cache.fn.size = function (key) {
