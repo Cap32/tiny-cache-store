@@ -1,6 +1,13 @@
 # tiny-cache-store
 
-Tiny cache store for Node.js and browser (only 884B after gzip)
+Tiny cache store for Node.js and browser
+
+## Features
+
+- [x] Tiny (only 884B after gzip)
+- [x] High performance
+- [x] Support TTL and LRU
+- [ ] Support promise
 
 ## Installation
 
