@@ -1,6 +1,6 @@
 # tiny-cache-store
 
-Tiny cache store for Node.js and browser
+Tiny cache store for Node.js and browser (only 884B after gzip)
 
 ## Installation
 
