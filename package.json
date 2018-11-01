@@ -28,6 +28,15 @@
   "author": "Cap32",
   "repository": "Cap32/tiny-cache-store",
   "license": "MIT",
+  "keywords": [
+    "cache",
+    "storage",
+    "lru",
+    "ttl",
+    "browser",
+    "nodejs",
+    "tiny"
+  ],
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
