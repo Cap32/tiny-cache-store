@@ -37,6 +37,7 @@ Indexes.fn.set = function (key, maxAge) {
 	var data = this._map[key];
 	var id;
 	if (data && data.id) {
+		// TODO: should update prev maxAge
 		id = data.id;
 		stick(this._uses, id);
 	}
@@ -111,10 +112,10 @@ Indexes.fn.size = function () {
 
 function Cache(options) {
 	options = options || {};
-	var max = defaults(options, 'max', 10);
 
 	this._store = {};
-	this._indexes = new Indexes(max);
+	this._max = defaults(options, 'max', 10);
+	this._indexes = new Indexes(this._max);
 	this._get = defaults(options, 'onGet', this._onGet.bind(this));
 	this._set = defaults(options, 'onSet', this._onSet.bind(this));
 	this._del = defaults(options, 'onDel', this._onDel.bind(this));
@@ -143,10 +144,17 @@ Cache.fn._getIndexes = function () {
 	return this._indexes;
 };
 
+Cache.fn._then = function (res, cb) {
+	var next = cb.bind(this);
+	return res && typeof res.then === 'function' ? res.then(next) : next(res);
+};
+
 Cache.fn.has = function (key) {
 	var indexes = this._getIndexes();
 	if (indexes.has(key)) return true;
-	if (this._get(key)) this._del(key);
+	this._then(this._get(key), function (item) {
+		if (item) this._del(key);
+	});
 	return false;
 };
 
@@ -159,8 +167,7 @@ Cache.fn.set = function (key, value, options) {
 	var maxAge = defaults(options, 'maxAge');
 	var indexes = this._getIndexes();
 	indexes.set(key, maxAge);
-	this._set(key, value);
-	return value;
+	return this._set(key, value);
 };
 
 Cache.fn.delete = function (key) {

@@ -1,7 +1,7 @@
 import Cache from './tiny-cache-store';
 import delay from 'delay';
 
-describe('cache', () => {
+describe('sync', () => {
 	test('get', () => {
 		const cache = new Cache();
 		expect(cache.get('foo')).toBe(undefined);
@@ -94,5 +94,60 @@ describe('cache', () => {
 		cache.set('bar', 1);
 		cache.clear();
 		expect(cache.size()).toBe(0);
+	});
+});
+
+describe('async', () => {
+	test('get', async () => {
+		const cache = new Cache({
+			async onGet(key) {
+				await delay(100);
+				return this._store[key];
+			},
+		});
+		cache.set('foo', 'bar');
+		const item = await cache.get('foo');
+		expect(item).toBe('bar');
+	});
+
+	test('set', async () => {
+		const cache = new Cache({
+			async onSet(key, val) {
+				await delay(100);
+				return (this._store[key] = val);
+			},
+		});
+		await cache.set('foo', 'bar');
+		const item = cache.get('foo');
+		expect(item).toBe('bar');
+	});
+
+	test('has', async () => {
+		const cache = new Cache({
+			async onGet(key) {
+				await delay(100);
+				return this._store[key];
+			},
+			async onSet(key, val) {
+				await delay(100);
+				return (this._store[key] = val);
+			},
+		});
+		await cache.set('foo', 'bar', { maxAge: 1 });
+		await delay(1200);
+		expect(cache.has('foo')).toBe(false);
+	});
+
+	test('delete', async () => {
+		const cache = new Cache({
+			async onDel(key) {
+				await delay(100);
+				this._store[key] = undefined;
+				return true;
+			},
+		});
+		cache.set('foo', 'bar');
+		await cache.delete('foo');
+		expect(cache.has('foo')).toBe(false);
 	});
 });
