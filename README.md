@@ -1,6 +1,8 @@
 # tiny-cache-store
 
-Tiny cache store for Node.js and browser
+[WIP] Tiny cache store for Node.js and browser
+
+**NOTE: Usage may change before v1.0 released**
 
 ## Features
 
