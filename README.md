@@ -1,5 +1,9 @@
 # tiny-cache-store
 
+[![Build Status](https://travis-ci.org/Cap32/tiny-cache-store.svg?branch=master)](https://travis-ci.org/Cap32/tiny-cache-store)
+[![Coverage Status](https://coveralls.io/repos/github/Cap32/tiny-cache-store/badge.svg?branch=master)](https://coveralls.io/github/Cap32/tiny-cache-store?branch=master)
+[![License](https://img.shields.io/badge/license-MIT_License-brightgreen.svg?style=flat)](https://github.com/Cap32/tiny-cache-store/blob/master/LICENSE.md)
+
 [WIP] Tiny cache store for Node.js and browser
 
 **NOTE: Usage may change before v1.0 released**
