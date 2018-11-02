@@ -4,10 +4,10 @@ Tiny cache store for Node.js and browser
 
 ## Features
 
-- [x] Tiny (only 884B after gzip)
-- [x] High performance
-- [x] Support TTL and LRU
-- [ ] Support promise
+- Tiny (less than 1kb after gzip)
+- High performance
+- Support TTL and LRU
+- Support promise
 
 ## Installation
 
