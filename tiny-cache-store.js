@@ -48,7 +48,7 @@ Indexes.fn.set = function (key, maxAge) {
 			this._uses.pop();
 		}
 	}
-	var data = { id: id };
+	var nextData = { id: id };
 	if (maxAge) {
 		var expiresAt = Math.round(Date.now() / 1000 + maxAge);
 		var index = getIndexBy(this._expires, function (exp) {
@@ -56,9 +56,9 @@ Indexes.fn.set = function (key, maxAge) {
 		});
 		if (index < 0) this._expires.push(expiresAt);
 		else this._expires.splice(index, 0, expiresAt);
-		data.expiresAt = expiresAt;
+		nextData.expiresAt = expiresAt;
 	}
-	this._map[key] = data;
+	this._map[key] = nextData;
 };
 
 Indexes.fn.has = function (key) {
@@ -135,7 +135,7 @@ Cache.fn._onDel = function (key) {
 	return !(this._store[key] = undefined);
 };
 
-Cache.fn._onClear = function (key) {
+Cache.fn._onClear = function () {
 	this._store = {};
 };
 
@@ -176,7 +176,7 @@ Cache.fn.clear = function () {
 	return this._clear();
 };
 
-Cache.fn.size = function (key) {
+Cache.fn.size = function () {
 	var indexes = this._getIndexes();
 	return indexes.size();
 };
