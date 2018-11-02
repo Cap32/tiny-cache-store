@@ -1,7 +1,7 @@
 {
   "name": "tiny-cache-store",
   "description": "Tiny cache store for Node.js and browser",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "dist/tiny-cache-store.js",
   "module": "tiny-cache-store.js",
   "jsnext:main": "tiny-cache-store.js",
